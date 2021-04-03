@@ -1,0 +1,53 @@
+<h1 class="text-5xl font-bold text-center">Modal Test</h1>
+<div x-data="{open: false}" x-init="() => {
+        $watch('open', value => {
+          console.log('open: ' + value)
+        })
+      }">
+  <a x-on:click="open = true" class="bg-gray-500 px-6 py-2 rounded-full my-5 inline-block cursor-pointer">
+    Open Modal
+  </a>
+
+  <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true" x-show="open">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+      <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+      <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <div class="bg-white rounded my-2 flex flex-col justify-center items-center text-sm">
+            <button x-on:click="open = false" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+              Global Close
+            </button>
+            <%= cond do %>
+              <% @first_phase -> %>
+                <div class="p-5 flex items-center justify-between w-full border-b">
+                  <h1 class="text-lg font-bold">First phase</h1>
+                </div>
+                <div class="p-5 flex">
+                  <p>Lorem Ipsum...</p>
+                </div>
+                <div class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse w-full">
+                  <button phx-click="transition_to_second_phase" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                    Next
+                  </button>
+                </div>
+              <% @second_phase -> %>
+                <div class="p-5 flex items-center justify-between w-full border-b">
+                  <h1 class="text-lg font-bold">Second phase</h1>
+                </div>
+                <div class="p-5 flex">
+                  <p>Second phase...</p>
+                </div>
+                <div class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse w-full">
+                  <button id="finish-button" x-on:click="open = false" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                    Finish
+                  </button>
+                </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
